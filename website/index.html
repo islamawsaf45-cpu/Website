@@ -74,6 +74,52 @@ nav a.l{border:1px solid transparent;transition:border-color .2s,box-shadow .2s,
 .scroll i{display:block;width:1px;height:56px;background:linear-gradient(var(--accent),transparent);transform-origin:top;animation:drop 2s ease-in-out infinite}
 .scroll:hover{color:var(--text)}
 @keyframes drop{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ===== motion / 3D / cursor additions ===== */
+h1{perspective:700px}
+h1 .w{display:inline-block;transform-origin:50% 100%;animation:cflip 1.1s cubic-bezier(.2,.8,.2,1) both}
+h1 .w1{color:var(--text)}
+h1 .w2{animation-delay:.18s}
+@keyframes cflip{from{opacity:0;transform:rotateX(-95deg) translateY(40px)}to{opacity:1;transform:none}}
+.photo{transition:transform .2s ease-out;will-change:transform}
+.marq{overflow:hidden;padding:28px 0 8px}
+.marq .track{display:flex;width:max-content;animation:cslide 24s linear infinite;font:800 clamp(24px,4vw,40px) Montserrat,sans-serif;letter-spacing:-.03em;white-space:nowrap}
+.marq:hover .track{animation-play-state:paused}
+.marq .grp{display:flex;gap:40px;padding-right:40px}
+.marq .grp span::after{content:"\2726";color:var(--accent);margin-left:40px}
+@keyframes cslide{to{transform:translateX(-50%)}}
+.grid{perspective:900px}
+.js .rv{opacity:0;transform:translateY(32px) rotateX(-10deg);transition:opacity .8s ease,transform .9s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--i,0)*100ms)}
+.js .rv.in{opacity:1;transform:none}
+.js .rv.done{transition:transform .15s ease-out,border-color .2s,box-shadow .2s,opacity .3s;transition-delay:0s}
+.cta{animation:cpulse 5s ease-in-out infinite}
+@keyframes cpulse{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 18px 50px -12px var(--accent)}}
+.cc,.cc *{cursor:none!important}
+.cdot,.cring{position:fixed;left:0;top:0;pointer-events:none;z-index:9999;opacity:0;transition:opacity .3s}
+.cshow .cdot,.cshow .cring{opacity:1}
+.cdot::before{content:"";display:block;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--accent);transition:transform .2s}
+.cdot.hov::before{transform:scale(0)}
+.cring::before{content:"";display:block;width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;border:2px solid var(--accent);transition:transform .25s cubic-bezier(.2,.8,.2,1),background .25s}
+.cring.hov::before{transform:scale(1.7);background:color-mix(in srgb,var(--accent) 18%,transparent)}
+.cring.down::before{transform:scale(.7)}
+.cring.hov.down::before{transform:scale(1.3)}
+.cripple{position:fixed;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;border:2px solid var(--accent);pointer-events:none;z-index:9998;animation:crip .65s ease-out forwards}
+@keyframes crip{to{transform:scale(8);opacity:0}}
+
+/* ===== 3D logos ===== */
+.orbit{height:230px;display:grid;place-items:center;perspective:900px;margin:6px 0 0}
+.otilt{transform-style:preserve-3d;transform:rotateX(calc(-12deg + var(--my,0)*-10deg)) rotateY(calc(var(--mx,0)*14deg));transition:transform .25s ease-out}
+.ring{position:relative;width:96px;height:96px;transform-style:preserve-3d;animation:oring 20s linear infinite}
+.tile{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateY(var(--a)) translateZ(190px)}
+.tile .in{position:absolute;inset:0;display:grid;place-items:center;border-radius:22px;background:color-mix(in srgb,var(--surface) 90%,transparent);border:1px solid var(--line);box-shadow:0 0 26px -6px var(--accent),inset 0 1px 0 color-mix(in srgb,var(--text) 14%,transparent);transform:rotateY(calc(-1*var(--a)));animation:ocounter 20s linear infinite}
+.tile .ic{width:52px;height:52px;filter:drop-shadow(0 8px 6px rgba(0,0,0,.4))}
+@keyframes oring{to{transform:rotateY(360deg)}}
+@keyframes ocounter{to{transform:rotateY(calc(-1*var(--a) - 360deg))}}
+.card,.card .top{transform-style:preserve-3d}
+.card .ic.big{transform:translateZ(34px);filter:drop-shadow(0 12px 8px rgba(0,0,0,.45));transition:transform .25s ease,filter .25s}
+.card:hover .ic.big{transform:translateZ(54px) scale(1.12);filter:drop-shadow(0 18px 12px rgba(0,0,0,.5))}
+.card h3,.card p,.card .go{transform:translateZ(14px)}
+@media (max-width:560px){.tile{transform:rotateY(var(--a)) translateZ(150px)}.orbit{height:200px}}
 </style>
 </head>
 <body>
@@ -96,7 +142,7 @@ nav a.l{border:1px solid transparent;transition:border-color .2s,box-shadow .2s,
   <div class="wrap hero">
    <div class="copy">
     <span class="tag">Editor</span>
-    <h1>Awsaf <span>Æ7</span></h1>
+    <h1><span class="w w1">Awsaf</span> <span class="w w2">Æ7</span></h1>
     <p class="lead">I edit videos and build websites. <strong>Join my Discord for free overlays, comps, presets</strong> and more.</p>
     <div class="row">
       <a class="btn main" href="https://discord.gg/9ADy3MVzZ" target="_blank" rel="noopener"><svg class="ic " aria-hidden="true"><use href="#i-dc"/></svg>Get free resources</a>
@@ -108,6 +154,10 @@ nav a.l{border:1px solid transparent;transition:border-color .2s,box-shadow .2s,
   </div>
 
   <a class="scroll" href="#tools" aria-label="Scroll down"><span>Scroll</span><i></i></a>
+
+  <div class="marq" aria-hidden="true"><div class="track"><div class="grp"><span>Edit videos</span><span>Build websites</span><span>Free overlays</span><span>Comps</span><span>Presets</span></div><div class="grp"><span>Edit videos</span><span>Build websites</span><span>Free overlays</span><span>Comps</span><span>Presets</span></div></div></div>
+
+  <div class="orbit" aria-hidden="true"><div class="otilt"><div class="ring"><div class="tile" style="--a:0deg"><div class="in"><svg class="ic yt" aria-hidden="true"><use href="#i-yt"/></svg></div></div><div class="tile" style="--a:60deg"><div class="in"><svg class="ic " aria-hidden="true"><use href="#i-tt"/></svg></div></div><div class="tile" style="--a:120deg"><div class="in"><svg class="ic dc" aria-hidden="true"><use href="#i-dc"/></svg></div></div><div class="tile" style="--a:180deg"><div class="in"><svg class="ic " aria-hidden="true"><use href="#i-ae"/></svg></div></div><div class="tile" style="--a:240deg"><div class="in"><svg class="ic " aria-hidden="true"><use href="#i-wtm"/></svg></div></div><div class="tile" style="--a:300deg"><div class="in"><svg class="ic " aria-hidden="true"><use href="#i-wf"/></svg></div></div></div></div></div>
 
   <section id="tools">
     <div class="wrap">
@@ -159,5 +209,33 @@ nav a.l{border:1px solid transparent;transition:border-color .2s,box-shadow .2s,
     <p>@Awsaf copyright reserved</p>
   </div>
 </footer>
+<script>
+(function(){
+var d=document.documentElement,rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+d.classList.add('js');
+var els=document.querySelectorAll('section h2,section .sub,.card,.cta');
+els.forEach(function(el){el.classList.add('rv');if(el.classList.contains('card')){var sib=el.parentNode.querySelectorAll(':scope > .card');el.style.setProperty('--i',Array.prototype.indexOf.call(sib,el))}});
+if(rm||!('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('in','done')});return}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var t=e.target;t.classList.add('in');setTimeout(function(){t.classList.add('done')},1300);io.unobserve(t)}})},{threshold:.15});
+els.forEach(function(el){io.observe(el)});
+addEventListener('scroll',function(){d.style.setProperty('--sy',window.scrollY)},{passive:true});
+addEventListener('pointermove',function(e){if(e.pointerType==='touch')return;d.style.setProperty('--mx',(e.clientX/innerWidth-.5)*2);d.style.setProperty('--my',(e.clientY/innerHeight-.5)*2)});
+document.querySelectorAll('.card,.photo').forEach(function(el){
+el.addEventListener('pointermove',function(e){if(e.pointerType==='touch')return;var r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform='perspective(900px) rotateX('+(-y*12)+'deg) rotateY('+(x*14)+'deg) translateZ(10px)'});
+el.addEventListener('pointerleave',function(){el.style.transform=''});
+});
+if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+var dot=document.createElement('div'),ring=document.createElement('div');
+dot.className='cdot';ring.className='cring';document.body.append(dot,ring);d.classList.add('cc');
+var x=innerWidth/2,y=innerHeight/2,rx=x,ry=y,on=false;
+addEventListener('pointermove',function(e){x=e.clientX;y=e.clientY;if(!on){on=true;rx=x;ry=y;d.classList.add('cshow')}var h=!!(e.target.closest&&e.target.closest('a,button,.card'));ring.classList.toggle('hov',h);dot.classList.toggle('hov',h)});
+d.addEventListener('mouseleave',function(){d.classList.remove('cshow')});
+d.addEventListener('mouseenter',function(){if(on)d.classList.add('cshow')});
+addEventListener('pointerdown',function(e){ring.classList.add('down');var r=document.createElement('div');r.className='cripple';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';document.body.appendChild(r);setTimeout(function(){r.remove()},700)});
+addEventListener('pointerup',function(){ring.classList.remove('down')});
+(function loop(){rx+=(x-rx)*.16;ry+=(y-ry)*.16;dot.style.transform='translate('+x+'px,'+y+'px)';ring.style.transform='translate('+rx+'px,'+ry+'px)';requestAnimationFrame(loop)})();
+}
+})();
+</script>
 </body>
 </html>
